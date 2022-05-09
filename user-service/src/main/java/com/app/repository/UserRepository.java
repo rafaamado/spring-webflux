@@ -19,5 +19,5 @@ public interface UserRepository extends ReactiveCrudRepository<User, Long> {
 			"where id = :userId " + 
 			"and balance >= :amount "
 	)
-	Mono<Boolean> updateUserBalance(Long userId, int amount);
+	Mono<Boolean> updateUserBalance(long userId, int amount);
 }
