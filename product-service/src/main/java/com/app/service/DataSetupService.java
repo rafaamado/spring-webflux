@@ -1,6 +1,10 @@
 package com.app.service;
 
+import java.time.Duration;
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Service;
 
 import com.app.dto.ProductDto;
 
@@ -8,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-//@Service
+@Service
 @RequiredArgsConstructor
 public class DataSetupService implements CommandLineRunner {
 
@@ -22,8 +26,15 @@ public class DataSetupService implements CommandLineRunner {
 		ProductDto p4 = new ProductDto("headphone", 100);
 		
 		Flux.just(p1, p2, p3, p4)
+			.concatWith(newProducts())
 			.flatMap(p -> service.insertProduct(Mono.just(p)))
 			.subscribe(System.out::println);
+	}
+	
+	private Flux<ProductDto> newProducts(){
+		return Flux.range(1, 1000)
+			.delayElements(Duration.ofSeconds(2))
+			.map(i -> new ProductDto("product-" + i, ThreadLocalRandom.current().nextInt(10, 100)));
 	}
 
 }

@@ -10,12 +10,14 @@ import com.app.util.EntityDtoUtil;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Sinks;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
 
 	private final ProductRepository repository;
+	private final Sinks.Many<ProductDto> sink;
 	
 	public Flux<ProductDto> getAll(){
 		return this.repository.findAll()
@@ -36,7 +38,8 @@ public class ProductService {
 		return productDtoMono
 			.map(EntityDtoUtil::toEntity)
 			.flatMap(repository::insert)
-			.map(EntityDtoUtil::toDto);
+			.map(EntityDtoUtil::toDto)
+			.doOnNext(this.sink::tryEmitNext);
 	}
 	
 	public Mono<ProductDto> updateProduct(String id, Mono<ProductDto> productDtoMono){
