@@ -1,5 +1,7 @@
 package com.app.service;
 
+import java.time.Duration;
+
 import org.springframework.stereotype.Service;
 
 import com.app.client.ProductClient;
@@ -13,6 +15,7 @@ import com.app.util.EntityDtoUtil;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+import reactor.util.retry.Retry;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +54,8 @@ public class OrderFulfillmentService {
 	private Mono<RequestContext> productRequestResponse(RequestContext rc) {
 		return this.productClient.getProductById(rc.getPurchaseOrderRequestDto().getProductId())
 			.doOnNext(rc::setProductDto)
+			//.retry(5)
+			.retryWhen(Retry.fixedDelay(5, Duration.ofSeconds(1)))
 			.thenReturn(rc);
 	}
 	

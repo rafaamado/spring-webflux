@@ -6,6 +6,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.app.dto.ProductDto;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -25,5 +26,12 @@ public class ProductClient {
 				.uri("/{id}", productId)
 				.retrieve()
 				.bodyToMono(ProductDto.class);
+	}
+	
+	public Flux<ProductDto> getAllProducts(){
+		return this.webClient
+					.get()
+					.retrieve()
+					.bodyToFlux(ProductDto.class);
 	}
 }

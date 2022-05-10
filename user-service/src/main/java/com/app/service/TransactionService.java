@@ -22,7 +22,7 @@ public class TransactionService {
 	private final UserTransactionRepository transactionRepository;
 	
 	public Mono<TransactionResponseDto> createTransaction(TransactionRequestDto requestDto){
-		return this.userRepository.updateUserBalance(requestDto.getAmount(), requestDto.getUserId())
+		return this.userRepository.updateUserBalance(requestDto.getUserId(), requestDto.getAmount())
 								.filter(Boolean::booleanValue)
 								.map(b -> EntityDtoUtil.toEntity(requestDto))
 								.flatMap(this.transactionRepository::save)
