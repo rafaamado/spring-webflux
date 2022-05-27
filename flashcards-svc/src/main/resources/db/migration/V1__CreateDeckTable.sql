@@ -1,0 +1,7 @@
+CREATE TABLE deck (
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  description VARCHAR(50),
+  created_at TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP NULL
+);

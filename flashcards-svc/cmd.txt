@@ -1,0 +1,3 @@
+docker run --name mypostgresql -e POSTGRES_PASSWORD=docker -e POSTGRES_USER=rafael -e POSTGRES_DB=flashcardsDB -p 5432:5432 -d postgres:latest
+
+./gradlew flywayMigrate -i
