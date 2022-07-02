@@ -2,11 +2,9 @@ package com.app.mapper;
 
 import com.app.controller.response.DeckResponse;
 import com.app.dto.DeckDto;
-import com.app.entity.Card;
 import com.app.entity.Deck;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import reactor.core.publisher.Flux;
 
 @Mapper(componentModel = "spring")
 public interface DeckMapper {
