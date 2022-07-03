@@ -34,8 +34,13 @@ public class DeckService {
                 .map(t -> new PageImpl<>(t.getT1(), pageRequest, t.getT2()));
     }
 
-    public Mono<DeckResponse> findDeckById(Long deckId){
+    public Flux<Deck> findDecksByUserId(Long userId){
+        return deckRepository.findDecksByUserId(userId);
+    }
+
+    public Mono<DeckResponse> findDeckById(Long deckId, Long currentUserId){
         Mono<DeckResponse> monoDeck = deckRepository.findById(deckId)
+                .filter(deck -> deck.getUserId().equals(currentUserId))
                 .switchIfEmpty(Mono.error(new NotFoundException("Deck with id " + deckId + " not found")))
                 .map(deckMapper::toResponseDto);
 
@@ -47,8 +52,8 @@ public class DeckService {
                 });
     }
 
-    public Mono<Deck> save(Mono<DeckDto> deckDto){
-        return deckDto
+    public Mono<Deck> save(DeckDto deckDto){
+        return Mono.just(deckDto)
                 .map(deckMapper::toEntity)
                 .flatMap(deckRepository::save);
     }

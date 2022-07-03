@@ -15,7 +15,8 @@ public class CardController {
     private final CardService cardService;
 
     @PostMapping
-    public Mono<Card> createCard(@PathVariable Long deckId, @RequestBody Mono<CardDto> card){
+    public Mono<Card> createCard(@PathVariable Long deckId,
+                                 @RequestBody Mono<CardDto> card){
         return cardService.createCard(deckId, card);
     }
 

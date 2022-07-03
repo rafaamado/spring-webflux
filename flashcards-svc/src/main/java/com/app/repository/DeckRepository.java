@@ -10,4 +10,5 @@ import reactor.core.publisher.Flux;
 public interface DeckRepository extends ReactiveCrudRepository<Deck, Long> {
 
     Flux<Deck> findAllBy(Pageable pageable);
+    Flux<Deck> findDecksByUserId(Long userId);
 }

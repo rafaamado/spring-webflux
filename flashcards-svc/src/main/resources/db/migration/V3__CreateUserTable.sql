@@ -1,0 +1,8 @@
+CREATE TABLE app_user (
+  id BIGSERIAL PRIMARY KEY,
+  email VARCHAR(200) NOT NULL,
+  password VARCHAR(500) NOT NULL,
+  ROLE VARCHAR(50) NOT NULL,
+  created_at TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP NULL
+);

@@ -14,6 +14,7 @@ public class Deck {
     private Long id;
     private String name;
     private String description;
+    private Long userId;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
