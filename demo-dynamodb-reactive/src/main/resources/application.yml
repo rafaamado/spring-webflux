@@ -1,0 +1,5 @@
+aws:
+  dynamodb:
+    access-key: AKIARD42L3G7GT4XVQ4T
+    secret-key: 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
+    region: us-east-1
